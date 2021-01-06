@@ -165,7 +165,6 @@ export const FormVehicles = (props) => {
                                                     vehicle_steering: null,
                                                     vehicle_motorpower: null,
                                                     vehicle_doors: null
-                                                    
                                                 }))
                                                 dispatch(brand(event.target.value))
                                                 if (data.error.vehicle_type){
