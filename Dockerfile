@@ -20,6 +20,7 @@ RUN apt-get install -y \
     nodejs \
     g++
 
+
 # 2. apache configs + document root
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/backend/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
@@ -40,7 +41,12 @@ RUN docker-php-ext-install \
     calendar \
     mbstring \
     pdo_mysql \
-    zip
+    zip \
+    exif
+
+
+RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
+RUN docker-php-ext-install -j$(nproc) gd
 
 # 5. composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -52,3 +58,5 @@ ARG uid
 RUN useradd -G www-data,root -u $uid -d /home/devuser devuser
 RUN mkdir -p /home/devuser/.composer && \
     chown -R devuser:devuser /home/devuser
+
+

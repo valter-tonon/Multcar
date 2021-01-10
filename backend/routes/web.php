@@ -17,3 +17,4 @@ Route::post('/register', 'UsersController@store');
 
 //Route::get('/marcas/{id}', "DataScrapping@marcas");
 //Route::get('/olx/{id}', "DataScrapping@index");
+Route::get('/thumb/{path}/{img}','ImageController@thumb');

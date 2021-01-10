@@ -23,3 +23,15 @@ apiAuth.interceptors.response.use( response => {
         window.location.replace('login')
     }
 })
+
+export const apiUpload = axios.create({
+    baseURL: 'http://localhost:4500/api/'
+})
+
+apiUpload.interceptors.request.use(
+    async (config) => {
+        config.headers.authorization = 'Bearer ' + await localStorage.getItem('access_token')
+        config.headers['Content-Type'] = "multipart/form-data"
+        return config
+    }
+)

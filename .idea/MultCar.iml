@@ -28,6 +28,8 @@
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/guzzlehttp/promises" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/guzzlehttp/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/hamcrest/hamcrest-php" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/intervention/image" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/intervention/imagecache" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/ixudra/curl" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/laminas/laminas-diactoros" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/laminas/laminas-zendframework-bridge" />
