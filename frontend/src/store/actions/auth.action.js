@@ -33,8 +33,8 @@ export const login = (credentials) =>{
         dispatch(changeLoading({open: true, msg: 'Autenticando...'}))
             api.post('oauth/token', {
             grant_type: 'password',
-            client_id: '1',
-            client_secret: '98879fOMFjhj4Zq5APbLOeSG5LGDuMojXEnusn5V',
+            client_id: '2',
+            client_secret: 'N5TvvcTa5lBCogVCdN5vQRPVQnv8KyCHMv7tsCM4',
             username: credentials.username,
             password: credentials.password
             }).then((response) => {

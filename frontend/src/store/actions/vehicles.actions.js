@@ -1,9 +1,13 @@
-import {apiAuth} from "../../utils/api";
+import {apiAuth, apiUpload} from "../../utils/api";
 import {changeLoading} from "./loading.actions";
+import {changeNotify} from "./notify.actions";
 
 export const actionTypes = {
     CHANGE : "VEHICLE_CHANGE",
     SUCCESS : "SUCCESS_VEHICLE",
+    UPLOAD_PHOTO : 'VEHICLE_UPLOAD_PHOTO',
+    DELETE_PHOTO : 'VEHICLE_DELETE_PHOTO',
+    REORDER_PHOTO : 'VEHICLE_DELETE_PHOTO',
     ERROR : "ERROR_VEHICLE",
     INDEX : "VEHICLE_INDEX",
     DESTROY : "VEHICLE_DESTROY"
@@ -84,6 +88,76 @@ export const destroy = (id) => dispatch =>{
             if( typeof res !== "undefined"){
                 if (res.data.status === 200){
                     dispatch(destroyResponse(id))
+                }
+            }
+        })
+}
+
+export const uploadPhotoResponse = (payload) => ({
+    type: actionTypes.UPLOAD_PHOTO,
+    payload
+})
+
+export const uploadPhoto = (item) => dispatch => {
+    dispatch(indexResponse({ upload_photo: true }))
+    return apiUpload.post('upload/vehicle', item)
+        .then(res =>{
+            dispatch(indexResponse({upload_photo: false}))
+            if (typeof res !== 'undefined') {
+                if (res.data.error){
+                    dispatch(changeNotify({
+                        open: true,
+                        msg: res.data.error,
+                        class: 'error'
+                    }))
+                }
+                if (res.data.id){
+                    dispatch(uploadPhotoResponse(res.data))
+                }
+            }
+        })
+}
+
+export const deletePhotoResponse = (payload) => ({
+    type: actionTypes.DELETE_PHOTO,
+    payload
+})
+
+export const deletePhoto = (id) =>dispatch =>{
+    return apiAuth.delete('upload/vehicle/'+id)
+        .then(res => {
+            if(typeof res !== "undefined") {
+                if (res.data.error) {
+                    dispatch(changeNotify({
+                        open:true,
+                        msg: res.data.error,
+                        class: 'error'
+                    }))
+                }
+
+                if (res.data.success){
+                    dispatch(deletePhotoResponse(id))
+                }
+            }
+        })
+}
+
+export const reoderPhotoResponse = (payload) =>({
+    type: actionTypes.REORDER_PHOTO,
+    payload
+})
+
+export const reorderPhoto = (pos, data) => dispatch =>{
+    dispatch(reoderPhotoResponse(data))
+    return apiAuth.put('/upload/vehicle/null', pos)
+        .then(res => {
+            if (typeof res !== "undefined") {
+                if (res.data.success){
+                    dispatch(changeNotify({
+                        open: true,
+                        msg: res.data.success,
+                        class: 'success'
+                    }))
                 }
             }
         })
